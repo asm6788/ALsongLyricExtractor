@@ -39,7 +39,6 @@ namespace 알송가사_추출
 
             String postData = "<?xml version="+'\u0022'+ "1.0" + '\u0022'+ " encoding="+ '\u0022' + "UTF-8" + '\u0022'+ "?>"+ "<SOAP-ENV:Envelope  xmlns:SOAP-ENV="+'\u0022'+"http://www.w3.org/2003/05/soap-envelope"+'\u0022'+ " xmlns:SOAP-ENC="+'\u0022'+"http://www.w3.org/2003/05/soap-encoding"+'\u0022'+ " xmlns:xsi="+'\u0022'+"http://www.w3.org/2001/XMLSchema-instance"+'\u0022'+ " xmlns:xsd="+'\u0022'+"http://www.w3.org/2001/XMLSchema"+'\u0022'+ " xmlns:ns2="+'\u0022'+"ALSongWebServer/Service1Soap"+'\u0022'+ " xmlns:ns1="+'\u0022'+"ALSongWebServer"+'\u0022'+ " xmlns:ns3="+'\u0022'+"ALSongWebServer/Service1Soap12"+'\u0022'+ ">"+ "<SOAP-ENV:Body>"+ "<ns1:GetLyric5>"+ "<ns1:stQuery>"+ "<ns1:strChecksum>"+ musicmd5 + "</ns1:strChecksum>"+ "<ns1:strVersion>3.36</ns1:strVersion>"+ "<ns1:strMACAddress>00ff667f9a08</ns1:strMACAddress>"+ "<ns1:strIPAddress>xxx.xxx.xxx.xxx</ns1:strIPAddress>"+"</ns1:stQuery>"+ "</ns1:GetLyric5>"+ "</SOAP-ENV:Body>"+ "</SOAP-ENV:Envelope>";
 
-
             HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create(callUrl);
             // 인코딩 UTF-8
             byte[] sendData = UTF8Encoding.UTF8.GetBytes(postData);
@@ -58,6 +57,8 @@ namespace 알송가사_추출
             temp = temp.Remove(temp.IndexOf("strLyric") -2);
             temp = temp.Replace("&lt;br&gt;", "\r\n");
             temp = temp.Replace("[00:00.00]\r\n", "");
+            temp = temp.Replace("&lt;", "<");
+            temp = temp.Replace("&gt;", ">");
             Console.WriteLine(temp);
             Console.ReadLine();
         }
