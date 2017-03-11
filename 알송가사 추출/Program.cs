@@ -15,21 +15,25 @@ namespace 알송가사_추출
     {
         static void Main(string[] args)
         {
-            if (args.Length != 1)
-            {
-                Console.WriteLine("mp3파일을 실행파일에 드래그 해주세요");
-                Console.ReadLine();
-                Environment.Exit(0);
-            }
+            //if (args.Length != 1)
+            //{
+            //    Console.WriteLine("mp3파일을 실행파일에 드래그 해주세요");
+            //    Console.ReadLine();
+            //    Environment.Exit(0);
+            //}
             int headerloc = 0;
             string Lyric = "";
             string musicmd5 = "";
             string Artist = "";
             string Title = "";
-            byte[] MusicByte = File.ReadAllBytes(args[0]);
+            byte[] MusicByte = File.ReadAllBytes(@"C:\Users\asm67\Documents\카카오톡 받은 파일\하울의움직이는성ost+-+인생의회전목마.MP3");
             for (int i = 0; i != MusicByte.Length; i++)
             {
-                if (ReadByte(MusicByte, i, 3) == "ID3")
+                if(MusicByte.Length < i+3)
+                {
+                    headerloc = 0;
+                }
+                else if (ReadByte(MusicByte, i, 3) == "ID3")
                 {
                     headerloc = MusicByte[i + 6] << 21 | MusicByte[i + 7] << 14 | MusicByte[i + 8] << 7 | MusicByte[i + 9] + 10;
                     break;
