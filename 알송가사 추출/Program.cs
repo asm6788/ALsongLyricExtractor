@@ -29,7 +29,7 @@ namespace 알송가사_추출
             byte[] MusicByte = File.ReadAllBytes(args[0]);
             for (int i = 0; i != MusicByte.Length; i++)
             {
-                if(MusicByte.Length < i+3)
+                if (MusicByte.Length < i + 3)
                 {
                     headerloc = 0;
                 }
@@ -39,7 +39,7 @@ namespace 알송가사_추출
                     break;
                 }
             }
-            musicmd5 = MD5(ReadByteReturnByte(MusicByte, headerloc, 163840));
+            musicmd5 = MD5(MusicByte, headerloc, 163840);
             Console.WriteLine(musicmd5);
 
             String callUrl = "http://lyrics.alsong.co.kr/alsongwebservice/service1.asmx";
@@ -78,25 +78,16 @@ namespace 알송가사_추출
             Console.ReadLine();
         }
 
-        static string ReadByte(byte[] buffer,int index,int count)
+        static string ReadByte(byte[] buffer, int index, int count)
         {
             return Encoding.UTF8.GetString(buffer, index, count);
         }
 
-        static byte[] ReadByteReturnByte(byte[] buffer, int index, int count)
-        {
-            byte[] temp = new byte[count];
-            for(int i = 0; i != count;i++)
-            {
-                temp[i] = buffer[index+i];
-            }
-            return temp;
-        }
 
-        private static string MD5(byte[] bytes)
+        static string MD5(byte[] bytes,int offset,int count)
         {
             MD5CryptoServiceProvider mD5CryptoServiceProvider = new MD5CryptoServiceProvider();
-            mD5CryptoServiceProvider.ComputeHash(bytes);
+            mD5CryptoServiceProvider.ComputeHash(bytes,offset,count);
             byte[] hash = mD5CryptoServiceProvider.Hash;
             StringBuilder stringBuilder = new StringBuilder();
             byte[] array = hash;
